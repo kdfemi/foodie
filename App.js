@@ -1,17 +1,13 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar} from 'react-native';
 import * as Fonts from 'expo-font';
 import {AppLoading} from 'expo';
 
-import MealsNavigator from './navigations/MealsNavigator'
+import MealsFavTabNavigator from './navigations/MealsNavigator'
 
 
 const fetchFonts = () => {
-  console.log('Called')
-  console.log('Called')
-  console.log('Called')
-  console.log('Called')
-  Fonts.loadAsync({
+  return Fonts.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
   })
@@ -20,12 +16,13 @@ const fetchFonts = () => {
 export default function App() {
 
   const [fontLoaded, setFontLoaded] = useState(false);
-  if(fontLoaded === false) {
+  if(!fontLoaded) {
   console.log('Entered')
-    return <AppLoading startAsync={fetchFonts}  onFinish={setFontLoaded(true)}/>
+    return <AppLoading 
+    startAsync={() => fetchFonts()}  onFinish={() => {setFontLoaded(true)}}/>
   }
   return (
-    <MealsNavigator/>
+    <MealsFavTabNavigator/>
   );
 }
 
