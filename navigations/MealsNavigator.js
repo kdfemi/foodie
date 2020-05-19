@@ -24,11 +24,16 @@ const MealsNavigator = () => {
             <Stack.Screen name="Categories" component={CategoriesScreen} options={{
                 title: 'Meal Categories'}} />
             <Stack.Screen name="CategoryMeals" component={CategoryMealScreen}/>
-            <Stack.Screen name="MealDetail" component={MealDetailScreen} options={{
-                headerRight: props => 
-                <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                    <Item title='Favorite' iconName='ios-star' onPress={() => console.log('Worked')}/>
-                </HeaderButtons>
+            <Stack.Screen name="MealDetail" component={MealDetailScreen}
+                options={(props) => {
+               return ({
+                   headerRight: () => 
+                    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                        <Item title='Favorite' iconName={props.route.params.isFav?'ios-star' : 'ios-star-outline'} onPress={() =>{ 
+                            props.route.params.toggleFav()
+                            }}/>
+                    </HeaderButtons>
+                })
             }}/>
         </Stack.Navigator>
     );

@@ -2,10 +2,15 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, StatusBar} from 'react-native';
 import * as Fonts from 'expo-font';
 import {AppLoading} from 'expo';
-
 import MealsFavTabNavigator from './navigations/MealsNavigator'
+import {Provider} from 'react-redux';
+import {createStore, combineReducers} from 'redux'
+import mealsReducer from './store/reducers/meals'
 
-
+const rootReducer = combineReducers({
+  meals: mealsReducer
+})
+const store = createStore(rootReducer);
 const fetchFonts = () => {
   return Fonts.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -21,7 +26,9 @@ export default function App() {
     startAsync={() => fetchFonts()}  onFinish={() => {setFontLoaded(true)}}/>
   }
   return (
-    <MealsFavTabNavigator/>
+    <Provider store={store}>
+      <MealsFavTabNavigator/>
+    </Provider>
   );
 }
 
